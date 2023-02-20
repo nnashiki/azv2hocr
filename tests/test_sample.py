@@ -1,4 +1,4 @@
-from nassypy import __version__
+from azv2hocr import __version__
 
 
 def test_version():

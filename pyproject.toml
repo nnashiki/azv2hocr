@@ -1,11 +1,11 @@
 [tool.poetry]
-name = "nassypy"
+name = "azv2hocr"
 version = "0.1.0"
-description = "skeleton cli"
-authors = ["Niten Nashiki <niten.nashiki@lightz-inc.com>"]
+description = "azv2hocr converts from Azure Computer Vision OCR output to hocr to make a searchable pdf."
+authors = ["Niten Nashiki <n.nashiki.work@gmail.com>"]
 readme = "README.md"
-homepage = "https://github.com/nnashiki/python-cli-app-skeleton"
-repository = "https://github.com/nnashiki/python-cli-app-skeleton"
+homepage = "https://github.com/nnashiki/azv2hocr"
+repository = "https://github.com/nnashiki/azv2hocr"
 
 [tool.poetry.dependencies]
 python = "^3.9"
@@ -58,4 +58,4 @@ test = { cmd = "pytest {test_package} -s -v", use_vars = true }
 fmt = { cmd = "task black && task isort", help = "format code" }
 
 [tool.poetry.scripts]
-nassypy = "nassypy.cli:cli"
+azv2hocr = "azv2hocr.cli:cli"
