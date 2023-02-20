@@ -58,4 +58,4 @@ test = { cmd = "pytest {test_package} -s -v", use_vars = true }
 fmt = { cmd = "task black && task isort", help = "format code" }
 
 [tool.poetry.scripts]
-nassypy = "azv2hocr.cli:cli"
+azv2hocr = "azv2hocr.cli:cli"
