@@ -15,14 +15,15 @@ def cli(ctx, main_param_bool, main_param_str, main_param_int):
 
 @cli.command()
 @click.pass_context
-@click.option("--sub_param", type=str)
-def sub(ctx, sub_param):
-    click.echo('start sub')
-
+@click.option("--vision_result", type=str)
+@click.option("--hocr", type=str)
+def convert(ctx, vision_result, hocr):
+    click.echo('start convert')
     click.echo(ctx.obj['MAIN_PARAM_BOOL'])
     click.echo(ctx.obj['MAIN_PARAM_STR'])
     click.echo(ctx.obj['MAIN_PARAM_INT'])
-    click.echo(sub_param)
+    click.echo(vision_result)
+    click.echo(hocr)
 
 
 if __name__ == '__main__':
