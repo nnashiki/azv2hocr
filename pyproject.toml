@@ -1,0 +1,61 @@
+[tool.poetry]
+name = "nassypy"
+version = "0.1.0"
+description = "skeleton cli"
+authors = ["Niten Nashiki <niten.nashiki@lightz-inc.com>"]
+readme = "README.md"
+homepage = "https://github.com/nnashiki/python-cli-app-skeleton"
+repository = "https://github.com/nnashiki/python-cli-app-skeleton"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+click = "^8.1.3"
+
+[tool.poetry.dev-dependencies]
+black = "^22.6.0"
+isort = "^5.10.1"
+pytest = "^7.1.2"
+taskipy = "^1.10.2"
+tox = "^3.25.1"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+line-length = 119
+target-version = ['py39']
+include = '\.pyi?$'
+exclude = '''
+(
+  /(
+      \.eggs
+    | \.git
+    | \.mypy_cache
+    | \.tox
+    | \.venv
+    | _build
+    | buck-out
+    | build
+    | dist
+  )/
+)
+'''
+
+[tool.isort]
+profile = "black"
+
+[tool.taskipy.variables]
+packege = "nassypy"
+test_package = "tests"
+
+[tool.taskipy.tasks]
+black = { cmd = "black {packege} && black {test_package}", use_vars = true }
+isort = { cmd = "isort {packege} && isort {test_package}", use_vars = true }
+# poetry run task test
+test = { cmd = "pytest {test_package} -s -v", use_vars = true }
+# poetry run task fmt
+fmt = { cmd = "task black && task isort", help = "format code" }
+
+[tool.poetry.scripts]
+nassypy = "nassypy.cli:cli"
