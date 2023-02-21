@@ -1,11 +1,10 @@
-import argparse
-import json
-import sys
 from html import escape
 from string import Template
 
+from .models import VisionResponse
 
-class GCVAnnotation:
+
+class Annotation:
 
     height = None
     width = None
@@ -18,15 +17,16 @@ class GCVAnnotation:
   <head>
     <title>HOCR File</title>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-    <meta name='ocr-system' content='gcv2hocr.py' />
+    <meta name='ocr-system' content='azv2hocr' />
     <meta name='ocr-langs' content='$lang' />
     <meta name='ocr-number-of-pages' content='1' />
     <meta name='ocr-capabilities' content='ocr_page ocr_carea ocr_par ocr_line ocrx_word ocrp_lang'/>
   </head>
   <body>
-    <div class='ocr_page' lang='$lang' title='image "$title";bbox 0 0 $page_width $page_height'>
-        <div class='ocr_carea' lang='$lang' title='bbox $x0 $y0 $x1 $y1'>$content</div>
+    <div class='ocr_page' lang='$lang' title='image "$image";bbox 0 0 $x1 $y1'>
+        $content
     </div>
+    <script src="https://unpkg.com/hocrjs"></script>
   </body>
 </html>
     """
@@ -56,42 +56,27 @@ class GCVAnnotation:
         ocr_class=None,
         lang="unknown",
         baseline="0 0",
-        page_height=None,
-        page_width=None,
         content=None,
-        box=None,
-        title="",
+        x0: int = 0,
+        y0: int = 0,
+        x1: int = 0,
+        y1: int = 0,
+        image="",
         savefile=False,
     ):
         if content == None:
             self.content = []
         else:
             self.content = content
-        self.title = title
+        self.image = image
         self.htmlid = htmlid
         self.baseline = baseline
-        self.page_height = GCVAnnotation.height if GCVAnnotation.height else page_height
-        self.page_width = GCVAnnotation.width if GCVAnnotation.width else page_width
         self.lang = lang
         self.ocr_class = ocr_class
-        try:
-            self.x0 = int(float(self.page_width * (box[0]["x"] if "x" in box[0] and box[0]["x"] > 0 else 0)))
-            self.y0 = int(float(self.page_height * (box[0]["y"] if "y" in box[0] and box[0]["y"] > 0 else 0)))
-            self.x1 = int(float(self.page_width * (box[2]["x"] if "x" in box[2] and box[2]["x"] > 0 else 0)))
-            self.y1 = int(float(self.page_height * (box[2]["y"] if "y" in box[2] and box[2]["y"] > 0 else 0)))
-        except ValueError as e:
-            output = (
-                "Input JSON does not have proper boundingBox values. "
-                "This page of the PDF either must not have been "
-                "parsed correctly by GCV or the JSON is somehow corrupt."
-            )
-            print(e, "\n", output)
-
-    def maximize_bbox(self):
-        self.x0 = min([w.x0 for w in self.content])
-        self.y0 = min([w.y0 for w in self.content])
-        self.x1 = max([w.x1 for w in self.content])
-        self.y1 = max([w.y1 for w in self.content])
+        self.x0 = x0
+        self.y0 = y0
+        self.x1 = x1
+        self.y1 = y1
 
     def __repr__(self):
         return "<%s [%s %s %s %s]>%s</%s>" % (
@@ -110,3 +95,41 @@ class GCVAnnotation:
         else:
             content = escape(self.content)
         return self.__class__.templates[self.ocr_class].substitute(self.__dict__, content=content)
+
+
+def fromResponse(resp: VisionResponse, file_name: str = "hoge"):
+    page = None
+    if isinstance(resp, bool) and not resp:
+        page = Annotation(ocr_class="ocr_page", htmlid="page_0", title=file_name)
+    else:
+        for page_no, page_json in enumerate(resp.__root__):
+            box = [{"x": 0, "y": 0}, {"x": 0, "y": 0}, {"x": 0, "y": 0}, {"x": 0, "y": 0}]
+            page = Annotation(ocr_class="ocr_page", htmlid="page" + str(page_no), x1=1000, y1=1000, image=file_name)
+            block = Annotation(ocr_class="ocr_carea", htmlid="block_" + str(page_no), x1=1000, y1=1000)
+            page.content.append(block)
+
+            for line_id, line in enumerate(page_json.lines):
+                curline = Annotation(
+                    ocr_class="ocr_line",
+                    htmlid="line_" + str(page_no) + "_" + str(line_id),
+                    x0=line.boundingBox[0],
+                    y0=line.boundingBox[1],
+                    x1=line.boundingBox[4],
+                    y1=line.boundingBox[5],
+                )
+
+                for word_id, word in enumerate(line.words):
+                    word_obj = Annotation(
+                        ocr_class="ocrx_word",
+                        htmlid="word_" + str(page_no) + "_" + str(line_id) + "_" + str(word_id),
+                        content=word.text,
+                        x0=word.boundingBox[0],
+                        y0=word.boundingBox[1],
+                        x1=word.boundingBox[4],
+                        y1=word.boundingBox[5],
+                    )
+
+                    curline.content.append(word_obj)
+                block.content.append(curline)
+
+    return page

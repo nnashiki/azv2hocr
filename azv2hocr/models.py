@@ -11,7 +11,7 @@ class Appearance(BaseModel):
 
 
 class Word(BaseModel):
-    boundingBox: list[float]
+    boundingBox: list[int]
     text: str
     confidence: float
 
