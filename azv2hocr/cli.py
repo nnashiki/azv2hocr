@@ -3,7 +3,7 @@ import os
 import click
 from bs4 import BeautifulSoup
 
-from .core import fromResponse
+from .core import fromResponse, PdfExtractor
 from .models import VisionResponse
 
 
@@ -33,12 +33,25 @@ def convert(ctx, vision_result, hocr):
 
     with (open(vision_result, "r", encoding="utf-8")) as infile:
         vision_response = VisionResponse.parse_file(path=vision_result, content_type="application/json")
-        file_name = os.path.basename(vision_result).split(".")[0]
-        page = fromResponse(vision_response.__root__, file_name + ".jpg")
+        files = os.path.basename(vision_result).split(".")
+        file_name = files[0]
+        print(f"file_name: {file_name}")
+        file_ext = files[1]
+        print(f"file_ext: {file_ext}")
+
+        pdf_path = vision_result.split(".")[0] + ".pdf"
+        extract_images = []
+        with PdfExtractor(pdf_path=pdf_path) as extractor:
+            for file_no, file in enumerate(extractor.image_file_paths):
+                out_image_path = vision_result.split(".")[0] + F"_{file_no}." + os.path.basename(file).split(".")[1]
+                os.rename(file, out_image_path)
+                extract_images.append(os.path.basename(out_image_path))
+            hocr_obj = fromResponse(resp=vision_response.__root__, files=extract_images)
+
         infile.close()
 
     with (open(hocr, "w", encoding="utf-8")) as outfile:
-        soup = BeautifulSoup(page.render(), "html.parser")
+        soup = BeautifulSoup(hocr_obj.render(), "html.parser")
         outfile.write(soup.prettify())
         outfile.close()
 
