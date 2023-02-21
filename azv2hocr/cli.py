@@ -1,11 +1,10 @@
 import os
 
 import click
+from bs4 import BeautifulSoup
 
 from .core import fromResponse
 from .models import VisionResponse
-from bs4 import BeautifulSoup
-
 
 
 @click.group()

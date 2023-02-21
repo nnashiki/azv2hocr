@@ -1,8 +1,8 @@
 from html import escape
 from string import Template
+from typing import List, Tuple
 
 from .models import ModelItem
-from typing import List, Tuple
 
 
 class Annotation:
@@ -100,8 +100,16 @@ def fromResponse(resp: list[ModelItem], file_name: str = "hoge"):
         page = Annotation(ocr_class="ocr_page", html_id="page_0")
     else:
         for page_no, page_obj in enumerate(resp):
-            page = Annotation(ocr_class="ocr_page", html_id="page" + str(page_no), x1=page_obj.width, y1=page_obj.height, image=file_name)
-            block = Annotation(ocr_class="ocr_carea", html_id="block_" + str(page_no), x1=page_obj.width, y1=page_obj.height)
+            page = Annotation(
+                ocr_class="ocr_page",
+                html_id="page" + str(page_no),
+                x1=page_obj.width,
+                y1=page_obj.height,
+                image=file_name,
+            )
+            block = Annotation(
+                ocr_class="ocr_carea", html_id="block_" + str(page_no), x1=page_obj.width, y1=page_obj.height
+            )
             page.content.append(block)
 
             for line_id, line in enumerate(page_obj.lines):
