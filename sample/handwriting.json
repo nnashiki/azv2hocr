@@ -1,0 +1,452 @@
+[
+  {
+    "page": 1,
+    "angle": -1.3737,
+    "width": 1000,
+    "height": 945,
+    "unit": "pixel",
+    "lines": [
+      {
+        "boundingBox": [
+          746,
+          185,
+          748,
+          198,
+          743,
+          199,
+          742,
+          185
+        ],
+        "appearance": {
+          "style": {
+            "name": "other",
+            "confidence": 0.972
+          }
+        },
+        "text": "-",
+        "words": [
+          {
+            "boundingBox": [
+              747,
+              186,
+              747,
+              188,
+              743,
+              188,
+              742,
+              186
+            ],
+            "text": "-",
+            "confidence": 0.869
+          }
+        ]
+      },
+      {
+        "boundingBox": [
+          254,
+          268,
+          671,
+          261,
+          672,
+          306,
+          255,
+          319
+        ],
+        "appearance": {
+          "style": {
+            "name": "handwriting",
+            "confidence": 0.982
+          }
+        },
+        "text": "You must be the change you",
+        "words": [
+          {
+            "boundingBox": [
+              254,
+              270,
+              302,
+              268,
+              304,
+              319,
+              257,
+              319
+            ],
+            "text": "You",
+            "confidence": 0.997
+          },
+          {
+            "boundingBox": [
+              311,
+              267,
+              382,
+              265,
+              385,
+              316,
+              314,
+              318
+            ],
+            "text": "must",
+            "confidence": 0.981
+          },
+          {
+            "boundingBox": [
+              392,
+              265,
+              426,
+              264,
+              428,
+              314,
+              394,
+              316
+            ],
+            "text": "be",
+            "confidence": 0.758
+          },
+          {
+            "boundingBox": [
+              435,
+              263,
+              494,
+              262,
+              497,
+              311,
+              438,
+              314
+            ],
+            "text": "the",
+            "confidence": 0.992
+          },
+          {
+            "boundingBox": [
+              504,
+              262,
+              606,
+              262,
+              608,
+              305,
+              506,
+              311
+            ],
+            "text": "change",
+            "confidence": 0.997
+          },
+          {
+            "boundingBox": [
+              616,
+              262,
+              671,
+              263,
+              673,
+              301,
+              618,
+              305
+            ],
+            "text": "you",
+            "confidence": 0.991
+          }
+        ]
+      },
+      {
+        "boundingBox": [
+          326,
+          343,
+          692,
+          332,
+          694,
+          368,
+          327,
+          382
+        ],
+        "appearance": {
+          "style": {
+            "name": "handwriting",
+            "confidence": 0.982
+          }
+        },
+        "text": "Wish to see in the world !",
+        "words": [
+          {
+            "boundingBox": [
+              327,
+              346,
+              391,
+              342,
+              392,
+              380,
+              328,
+              382
+            ],
+            "text": "Wish",
+            "confidence": 0.983
+          },
+          {
+            "boundingBox": [
+              406,
+              342,
+              438,
+              340,
+              439,
+              378,
+              407,
+              379
+            ],
+            "text": "to",
+            "confidence": 0.961
+          },
+          {
+            "boundingBox": [
+              445,
+              339,
+              492,
+              337,
+              494,
+              376,
+              447,
+              378
+            ],
+            "text": "see",
+            "confidence": 0.998
+          },
+          {
+            "boundingBox": [
+              500,
+              337,
+              532,
+              336,
+              534,
+              375,
+              501,
+              376
+            ],
+            "text": "in",
+            "confidence": 0.997
+          },
+          {
+            "boundingBox": [
+              539,
+              336,
+              593,
+              334,
+              595,
+              373,
+              541,
+              374
+            ],
+            "text": "the",
+            "confidence": 0.996
+          },
+          {
+            "boundingBox": [
+              604,
+              334,
+              661,
+              333,
+              663,
+              370,
+              606,
+              372
+            ],
+            "text": "world",
+            "confidence": 0.997
+          },
+          {
+            "boundingBox": [
+              668,
+              333,
+              692,
+              332,
+              694,
+              370,
+              670,
+              370
+            ],
+            "text": "!",
+            "confidence": 0.979
+          }
+        ]
+      },
+      {
+        "boundingBox": [
+          254,
+          444,
+          641,
+          439,
+          642,
+          480,
+          254,
+          485
+        ],
+        "appearance": {
+          "style": {
+            "name": "handwriting",
+            "confidence": 0.982
+          }
+        },
+        "text": "Everything has its beauty, but",
+        "words": [
+          {
+            "boundingBox": [
+              254,
+              446,
+              381,
+              443,
+              382,
+              484,
+              256,
+              485
+            ],
+            "text": "Everything",
+            "confidence": 0.988
+          },
+          {
+            "boundingBox": [
+              390,
+              443,
+              430,
+              442,
+              431,
+              483,
+              391,
+              484
+            ],
+            "text": "has",
+            "confidence": 0.99
+          },
+          {
+            "boundingBox": [
+              438,
+              442,
+              478,
+              441,
+              479,
+              483,
+              439,
+              483
+            ],
+            "text": "its",
+            "confidence": 0.991
+          },
+          {
+            "boundingBox": [
+              486,
+              441,
+              581,
+              440,
+              581,
+              482,
+              487,
+              483
+            ],
+            "text": "beauty,",
+            "confidence": 0.57
+          },
+          {
+            "boundingBox": [
+              589,
+              440,
+              642,
+              439,
+              642,
+              481,
+              589,
+              482
+            ],
+            "text": "but",
+            "confidence": 0.934
+          }
+        ]
+      },
+      {
+        "boundingBox": [
+          366,
+          513,
+          658,
+          497,
+          660,
+          533,
+          366,
+          549
+        ],
+        "appearance": {
+          "style": {
+            "name": "handwriting",
+            "confidence": 0.856
+          }
+        },
+        "text": "not everyone sees it !",
+        "words": [
+          {
+            "boundingBox": [
+              366,
+              516,
+              413,
+              512,
+              413,
+              546,
+              367,
+              549
+            ],
+            "text": "not",
+            "confidence": 0.999
+          },
+          {
+            "boundingBox": [
+              422,
+              511,
+              524,
+              504,
+              524,
+              540,
+              423,
+              545
+            ],
+            "text": "everyone",
+            "confidence": 0.985
+          },
+          {
+            "boundingBox": [
+              533,
+              503,
+              587,
+              500,
+              587,
+              537,
+              534,
+              539
+            ],
+            "text": "sees",
+            "confidence": 0.984
+          },
+          {
+            "boundingBox": [
+              594,
+              500,
+              628,
+              498,
+              629,
+              536,
+              594,
+              537
+            ],
+            "text": "it",
+            "confidence": 0.998
+          },
+          {
+            "boundingBox": [
+              635,
+              498,
+              658,
+              497,
+              659,
+              535,
+              636,
+              535
+            ],
+            "text": "!",
+            "confidence": 0.979
+          }
+        ]
+      }
+    ]
+  }
+]

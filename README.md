@@ -3,7 +3,10 @@ azv2hocr converts from Azure Computer Vision OCR output to hocr to make a search
 
 
 ``` shell
-$ poetry run azv2hocr --main_param_str hoge --main_param_int 1 sub --sub_param fuga 
+$ poetry run azv2hocr --main_param_str hoge --main_param_int 1 convert --vision_result sample/handwriting.json --hocr sample/handwriting.html
+```
+
+``` shell
 start sub
 False
 hoge
