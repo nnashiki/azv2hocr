@@ -1,6 +1,6 @@
 from html import escape
 from string import Template
-from typing import List, Tuple
+from typing import List
 
 from .models import ModelItem
 
@@ -94,7 +94,7 @@ class Annotation:
         return self.__class__.templates[self.ocr_class].substitute(self.__dict__, content=content)
 
 
-def fromResponse(resp: list[ModelItem], file_name: str = "hoge"):
+def fromResponse(resp: List[ModelItem], file_name: str = "hoge"):
     page = None
     if len(resp) == 0:
         page = Annotation(ocr_class="ocr_page", html_id="page_0")

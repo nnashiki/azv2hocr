@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+from typing import List
 
 
 class Style(BaseModel):
@@ -11,16 +12,16 @@ class Appearance(BaseModel):
 
 
 class Word(BaseModel):
-    boundingBox: list[int]
+    boundingBox: List[int]
     text: str
     confidence: float
 
 
 class Line(BaseModel):
-    boundingBox: list[float]
+    boundingBox: List[float]
     appearance: Appearance
     text: str
-    words: list[Word]
+    words: List[Word]
 
 
 class ModelItem(BaseModel):
@@ -29,8 +30,8 @@ class ModelItem(BaseModel):
     width: int
     height: int
     unit: str
-    lines: list[Line]
+    lines: List[Line]
 
 
 class VisionResponse(BaseModel):
-    __root__: list[ModelItem]
+    __root__: List[ModelItem]
