@@ -26,8 +26,8 @@ class Line(BaseModel):
 class ModelItem(BaseModel):
     page: int
     angle: float
-    width: float
-    height: float
+    width: int
+    height: int
     unit: str
     lines: list[Line]
 

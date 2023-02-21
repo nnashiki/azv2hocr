@@ -4,6 +4,8 @@ import click
 
 from .core import fromResponse
 from .models import VisionResponse
+from bs4 import BeautifulSoup
+
 
 
 @click.group()
@@ -33,11 +35,12 @@ def convert(ctx, vision_result, hocr):
     with (open(vision_result, "r", encoding="utf-8")) as infile:
         vision_response = VisionResponse.parse_file(path=vision_result, content_type="application/json")
         file_name = os.path.basename(vision_result).split(".")[0]
-        page = fromResponse(vision_response, file_name + ".jpg")
+        page = fromResponse(vision_response.__root__, file_name + ".jpg")
         infile.close()
 
     with (open(hocr, "w", encoding="utf-8")) as outfile:
-        outfile.write(page.render())
+        soup = BeautifulSoup(page.render(), "html.parser")
+        outfile.write(soup.prettify())
         outfile.close()
 
 
