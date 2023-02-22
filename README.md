@@ -11,6 +11,7 @@ poetry install
 
 ``` shell
 $ poetry run azv2hocr --main_param_str hoge --main_param_int 1 convert --vision_result sample/handwriting.json --hocr sample/handwriting.html
+$ poetry run azv2hocr --main_param_str hoge --main_param_int 1 convert --vision_result sample-single-pdf/sample-single.json --hocr sample-single-pdf/sample-single.html
 ```
 
 ``` shell

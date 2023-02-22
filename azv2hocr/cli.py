@@ -31,24 +31,21 @@ def convert(ctx, vision_result, hocr):
     click.echo(vision_result)
     click.echo(hocr)
 
-    with (open(vision_result, "r", encoding="utf-8")) as infile:
-        vision_response = VisionResponse.parse_file(path=vision_result, content_type="application/json")
-        files = os.path.basename(vision_result).split(".")
-        file_name = files[0]
-        print(f"file_name: {file_name}")
-        file_ext = files[1]
-        print(f"file_ext: {file_ext}")
+    vision_response = VisionResponse.parse_file(path=vision_result, content_type="application/json")
+    base_path = vision_result.split(".")[0]
+    pdf_path = base_path + ".pdf"
 
-        pdf_path = vision_result.split(".")[0] + ".pdf"
-        extract_images = []
-        with PdfExtractor(pdf_path=pdf_path) as extractor:
-            for file_no, file in enumerate(extractor.image_file_paths):
-                out_image_path = vision_result.split(".")[0] + F"_{file_no}." + os.path.basename(file).split(".")[1]
-                os.rename(file, out_image_path)
-                extract_images.append(os.path.basename(out_image_path))
-            hocr_obj = fromResponse(resp=vision_response.__root__, files=extract_images)
-
-        infile.close()
+    extract_images = []
+    with PdfExtractor(pdf_path=pdf_path) as extractor:
+        """
+        PDF から画像を展開して、Vision API の結果とマッチングさせる
+        """
+        for file_no, extract_image_file_path in enumerate(extractor.image_file_paths):
+            extract_image_file_ext = os.path.basename(extract_image_file_path).split(".")[1]
+            out_image_path = base_path + F"_{file_no}." + extract_image_file_ext
+            os.rename(extract_image_file_path, out_image_path)   # 画像を work から作業ディレクトリに移動させる
+            extract_images.append(os.path.basename(out_image_path))
+        hocr_obj = fromResponse(resp=vision_response.__root__, files=extract_images)
 
     with (open(hocr, "w", encoding="utf-8")) as outfile:
         soup = BeautifulSoup(hocr_obj.render(), "html.parser")

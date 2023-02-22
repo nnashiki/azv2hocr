@@ -19,8 +19,9 @@ output_string = StringIO()
 class Annotation:
 
     templates = {
-        "ocr_page": Template(
-            """<?xml version="1.0" encoding="UTF-8"?>
+        "ocr_base": Template(
+            """
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="$lang" lang="$lang">
   <head>
@@ -32,13 +33,18 @@ class Annotation:
     <meta name='ocr-capabilities' content='ocr_page ocr_carea ocr_par ocr_line ocrx_word ocrp_lang'/>
   </head>
   <body>
-    <div class='ocr_page' lang='$lang' title='image "$image";bbox 0 0 $x1 $y1'>
-        $content
-    </div>
+    $content
     <script src="https://unpkg.com/hocrjs"></script>
   </body>
 </html>
-    """
+        """
+        ),
+        "ocr_page": Template(
+            """
+            <div class='ocr_page' lang='$lang' title='image "$image";bbox 0 0 $x1 $y1'>
+                $content
+            </div>
+            """
         ),
         "ocr_line": Template(
             """
@@ -106,6 +112,10 @@ class Annotation:
 
 
 def fromResponse(resp: List[Page], files: List[str]):
+    base = Annotation(
+        ocr_class="ocr_base",
+        html_id=""
+    )
     page = None
     if len(resp) == 0:
         page = Annotation(ocr_class="ocr_page", html_id="page_0")
@@ -147,8 +157,8 @@ def fromResponse(resp: List[Page], files: List[str]):
 
                     curline.content.append(word_obj)
                 block.content.append(curline)
-
-    return page
+            base.content.append(page)
+    return base
 
 
 class NotFoundPdfException(Exception):
